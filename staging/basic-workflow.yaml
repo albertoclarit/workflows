@@ -1,0 +1,63 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  namespace: staging # Important. If this is a fargate profiled namespace... it will run as a fargate pod
+  name: basic-workflow #non fargate
+spec:
+  entrypoint: hello           # We reference our first "template" here
+    ttlStrategy:
+      secondsAfterCompletion: 30
+  #  podGC:
+  #    strategy: OnPodCompletion
+  templates:
+    - name: hello               # The first "template" in this Workflow, it is referenced by "entrypoint"
+      steps:                    # The type of this "template" is "steps"
+        - - name: hello
+            template: whalesay    # We reference our second "template" here
+            arguments:
+              parameters: [{name: message, value: "hello1"}]
+
+    - name: whalesay             # The second "template" in this Workflow, it is referenced by "hello"
+      inputs:
+        parameters:
+          - name: message
+      container:                # The type of this "template" is "container"
+        image: docker/whalesay
+        command: [cowsay]
+        args: ["{{inputs.parameters.message}}"]
+        resources: # limit the resources
+          requests:
+            memory: 100Mi
+            cpu: 100m
+          limits:
+            memory: 100Mi
+            cpu: 100m
+
+  # version 3.2.8
+  # Without resource limitation fargate defaults to
+  # 2 CPU 4G
+
+
+  # "annotations": {
+  #   "CapacityProvisioned": "0.25vCPU 0.5GB",
+  #   "Logging": "LoggingEnabled",
+  #   "kubernetes.io/psp": "eks.privileged",
+  #   "workflows.argoproj.io/node-id": "basic-example-using-fargate-wrqz8-978078285",
+  #   "workflows.argoproj.io/node-name": "basic-example-using-fargate-wrqz8[0].hello"
+  # },
+
+  # attachable-volumes-aws-ebs: 39
+  #   cpu: 2
+  #   ephemeral-storage: 30832548Ki
+  #   hugepages-1Gi: 0
+  #   hugepages-2Mi: 0
+  #   memory: 3976988Ki
+  #   pods: 1
+  # Allocatable:
+  #   attachable-volumes-aws-ebs: 39
+  #   cpu: 2
+  #   ephemeral-storage: 28415276190
+  #   hugepages-1Gi: 0
+  #   hugepages-2Mi: 0
+  #   memory: 3874588Ki
+  #   pods: 1
