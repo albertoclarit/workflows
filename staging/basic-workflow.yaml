@@ -5,8 +5,8 @@ metadata:
   name: basic-workflow #non fargate
 spec:
   entrypoint: hello           # We reference our first "template" here
-    ttlStrategy:
-      secondsAfterCompletion: 30
+  ttlStrategy:
+    secondsAfterCompletion: 30
   #  podGC:
   #    strategy: OnPodCompletion
   templates:
