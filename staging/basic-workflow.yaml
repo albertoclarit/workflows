@@ -1,5 +1,5 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Workflow
+kind: WorkflowTemplate
 metadata:
   namespace: staging # Important. If this is a fargate profiled namespace... it will run as a fargate pod
   name: basic-workflow #non fargate
