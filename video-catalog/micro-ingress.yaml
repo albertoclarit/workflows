@@ -9,14 +9,14 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2  #https://kubernetes.github.io/ingress-nginx/examples/rewrite/
+#    nginx.ingress.kubernetes.io/rewrite-target: /$2  #https://kubernetes.github.io/ingress-nginx/examples/rewrite/
 spec:
   rules:
     - host: videos.albertoclarit.com
       http:
         paths:
           - pathType: Prefix
-            path: "/home(/|$)(.*)"
+            path: /
             backend:
               service:
                 name: videos-web
