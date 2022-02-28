@@ -14,8 +14,23 @@ spec:
     - name: starter-job
       steps:
         -
-          - name: main-jobs-dag
+          - name: daily-batch-input
             template: daily-batch-input-jobs
+        -
+          - name: daily-batch-process
+            template: daily-batch-process-jobs
+
+    - name: daily-batch-process-jobs
+      dag:
+        tasks:
+          - name: ppe-way4-scheduler-MC_MIGS_IMP
+            template: whalesay
+              arguments:
+                parameters: [ { name: message, value: "ppe-way4-scheduler-MC_MIGS_IMP" } ]
+          - name: ppe-way4-scheduler-VISA_ENH_IMP
+            template: whalesay
+              arguments:
+                parameters: [ { name: message, value: "ppe-way4-scheduler-VISA_ENH_IMP" } ]
 
 
     - name: daily-batch-input-jobs
