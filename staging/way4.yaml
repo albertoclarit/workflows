@@ -73,11 +73,11 @@ spec:
             dependencies: [ way4-dcf-authorization-parser]
             arguments:
               parameters: [{name: message, value: "visa-file-transfer-files-inc-ctv"}]
-          - name:  cms-file-transfer-upload
+          - name:  cms-file-transfer-upload-epin
             template: whalesay
             dependencies: [ visa-file-transfer-files-inc-ctv]
             arguments:
-              parameters: [{name: message, value: "  cms-file-transfer-upload"}]
+              parameters: [{name: message, value: "  cms-file-transfer-upload-epin"}]
 
           - name: way4-ctv-parser-transfer
             template: whalesay
