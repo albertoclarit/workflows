@@ -1,0 +1,60 @@
+# This template demonstrates a steps template and how to control sequential vs. parallel steps.
+# In this example, the hello1 completes before the hello2a, and hello2b steps, which run in parallel.
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  namespace: staging # Important. If this is a fargate profiled namespace... it will run as a fargate pod
+  name : "way4-poc"
+  generateName: way4-poc-
+spec:
+  entrypoint: main-job
+  ttlStrategy:
+    secondsAfterCompletion: 30
+  templates:
+    - name: starter-job
+      steps:
+        -
+          - name: main-jobs-parallel
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "starter-job"}]
+
+
+    - name: main-jobs-parallel
+      steps:
+        -
+          - name: ops-preworks
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "ops-preworks"}]
+          - name: auth-parser-batch-p3
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "auth-parser-batch-p3"}]
+          - name: pgfs-group
+            template: pgfs-jobs-sequential
+            arguments:
+              parameters: [{name: message, value: "auth-parser-batch-p3"}]
+
+    - name: pgfs-jobs-sequential
+      steps:
+        -
+          - name: transfer-pgfs-files
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "transfer-pgfs-files"}]
+        -
+          - name: auth-parser-batch-pgfs
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "auth-parser-batch-pgfs"}]
+
+# actual template running
+    - name: whalesay
+      inputs:
+        parameters:
+          - name: message
+      container:
+        image: docker/whalesay
+        command: [cowsay]
+        args: ["{{inputs.parameters.message}}"]
