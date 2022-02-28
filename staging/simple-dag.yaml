@@ -9,6 +9,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
   name : "simple-diamond"
+  namespace: staging # Important. If this is a fargate profiled namespace... it will run as a fargate pod
   generateName: dag-diamond-
 spec:
   entrypoint: diamond
