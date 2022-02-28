@@ -54,8 +54,8 @@ metadata:
   namespace: video-catalog
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+#    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+#    nginx.ingress.kubernetes.io/rewrite-target: /$2
   name: videos-web
 spec:
   ingressClassName: nginx
@@ -63,7 +63,7 @@ spec:
     - host: videos.albertoclarit.com
       http:
         paths:
-          - path: /home(/|$)(.*)
+          - path: /
             pathType: Prefix
             backend:
               service:
