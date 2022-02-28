@@ -27,8 +27,8 @@ spec:
             template: ops-preworks-jobs
             arguments:
               parameters: [{name: message, value: "ops-preworks"}]
-          - name: auth-parser-batch-p3
-            template: whalesay
+          - name: auth-parser-batch-p3-parallel
+            template: auth-parser-batch-p3-jobs
             arguments:
               parameters: [{name: message, value: "auth-parser-batch-p3"}]
           - name: pgfs-group-sequential
@@ -73,6 +73,29 @@ spec:
             arguments:
               parameters: [{name: message, value: "way4-ctv-authorization-parser"}]
 
+    - name: auth-parser-batch-p3-jobs
+      steps:
+        -
+          - name: way4-doc-generation-p3-visa
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "way4-doc-generation-p3-visa"}]
+          - name: way4-doc-generation-p3-mc
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "way4-doc-generation-p3-mc"}]
+          - name: way4-doc-generation-p3-jcb
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "way4-doc-generation-p3-jcb"}]
+          - name: way4-doc-generation-p3-amex
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "way4-doc-generation-p3-amex"}]
+          - name: way4-doc-generation-bancnet
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "way4-doc-generation-bancnet"}]
 
     - name: pgfs-jobs
       steps:
