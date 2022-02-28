@@ -40,11 +40,11 @@ spec:
             arguments:
               parameters: [{name: message, value: "auth-parser-batch-p3"}]
           - name: cms-file-transfer-upload-dag
-              template: cms-file-transfer-upload
-              arguments:
+            template: cms-file-transfer-upload-job
+            arguments:
                 parameters: [{name: message, value: "auth-parser-batch-p3"}]
 
-    - name: cms-file-transfer-upload
+    - name: cms-file-transfer-upload-job
       dag:
         tasks:
           - name: cms-file-transfer-upload
