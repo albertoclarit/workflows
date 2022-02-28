@@ -17,7 +17,7 @@ spec:
                 name: videos-web
                 port:
                   number: 80
-            path: /home(/|$)(.*)
+            path: "/home(/|$)(.*)"
             pathType: Prefix
 
 
