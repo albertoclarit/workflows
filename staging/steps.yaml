@@ -31,6 +31,7 @@ spec:
               template: whalesay
               arguments:
                 parameters: [ { name: message, value: "hello3" } ]
+
         - - name: hello4
               template: whalesay
               arguments:
