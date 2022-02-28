@@ -13,6 +13,8 @@ metadata:
   generateName: dag-diamond-
 spec:
   entrypoint: diamond
+  ttlStrategy:
+    secondsAfterCompletion: 30
   templates:
     - name: diamond
       dag:
