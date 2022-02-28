@@ -23,11 +23,11 @@ spec:
     - name: daily-batch-process-jobs
       dag:
         tasks:
-          - name: ppe-way4-scheduler-MC_MIGS_IMP
+          - name: ppe-way4-scheduler-MC-MIGS-IMP
             template: whalesay
             arguments:
                 parameters: [ { name: message, value: "ppe-way4-scheduler-MC_MIGS_IMP" } ]
-          - name: ppe-way4-scheduler-VISA_ENH_IMP
+          - name: ppe-way4-scheduler-VISA-ENH-IMP
             template: whalesay
             arguments:
                 parameters: [ { name: message, value: "ppe-way4-scheduler-VISA_ENH_IMP" } ]
