@@ -35,6 +35,11 @@ spec:
             template: pgfs-jobs
             arguments:
               parameters: [{name: message, value: "auth-parser-batch-p3"}]
+          - name: auth-parser-group-sequential
+            template: auth-parser-jobs
+            arguments:
+              parameters: [{name: message, value: "auth-parser-batch-p3"}]
+
 
     - name: pgfs-jobs
       steps:
@@ -48,6 +53,19 @@ spec:
             template: whalesay
             arguments:
               parameters: [{name: message, value: "auth-parser-batch-pgfs"}]
+
+    - name: auth-parser-jobs
+      steps:
+        -
+          - name: auth-parser-batch-paypal
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "auth-parser-batch-paypal"}]
+        -
+          - name: auth-parser-batch-mdms
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "auth-parser-batch-mdms"}]
 
 # actual template running
     - name: whalesay
