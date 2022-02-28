@@ -9,7 +9,7 @@ metadata:
 spec:
   entrypoint: starter-job
   ttlStrategy:
-    secondsAfterCompletion: 30
+    secondsAfterCompletion: 60
   templates:
     - name: starter-job
       steps:
@@ -23,7 +23,7 @@ spec:
     - name: main-jobs
       steps:
         -
-          - name: ops-preworks
+          - name: ops-preworks-sequential
             template: ops-preworks-jobs
             arguments:
               parameters: [{name: message, value: "ops-preworks"}]
@@ -39,6 +39,20 @@ spec:
             template: auth-parser-jobs
             arguments:
               parameters: [{name: message, value: "auth-parser-batch-p3"}]
+          - name: cms-file-transfer-upload-dag
+              template: cms-file-transfer-upload
+              arguments:
+                parameters: [{name: message, value: "auth-parser-batch-p3"}]
+
+    - name: cms-file-transfer-upload
+      dag:
+        tasks:
+          - name: cms-file-transfer-upload
+            template: whalesay
+            dependencies: [ops-preworks-jobs]
+            arguments:
+              parameters: [{name: message, value: "cms-file-transfer-upload"}]
+
 
     - name: ops-preworks-jobs
       steps:
