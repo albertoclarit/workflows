@@ -19,6 +19,15 @@ spec:
                 name: videos-web
                 port:
                   number: 80
-
+    - host: api.albertoclarit.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: playlists-api
+                port:
+                  number: 80
 
 
