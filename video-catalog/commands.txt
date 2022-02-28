@@ -1,4 +1,4 @@
-While ($true) { curl -UseBasicParsing http://video.albertoclarit.com/home/;curl -UseBasicParsing http://videos.albertoclarit.com/api/playlists; Start-Sleep -Seconds 1;}
+While ($true) { curl -UseBasicParsing http://video.albertoclarit.com;curl -UseBasicParsing http://api.albertoclarit.com; Start-Sleep -Seconds 1;}
 
 
 
