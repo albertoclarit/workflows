@@ -24,7 +24,7 @@ spec:
       steps:
         -
           - name: ops-preworks
-            template: whalesay
+            template: ops-preworks-jobs
             arguments:
               parameters: [{name: message, value: "ops-preworks"}]
           - name: auth-parser-batch-p3
@@ -39,6 +39,39 @@ spec:
             template: auth-parser-jobs
             arguments:
               parameters: [{name: message, value: "auth-parser-batch-p3"}]
+
+    - name: ops-preworks-jobs
+      steps:
+        -
+          - name: mc-file-transfer-files-inc-migs
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "mc-file-transfer-files-inc-migs"}]
+        -
+          - name: way4-dcf-parser-transfer
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "way4-dcf-parser-transfer"}]
+        -
+          - name: way4-dcf-authorization-parser
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "way4-dcf-authorization-parser"}]
+        -
+          - name: visa-file-transfer-files-inc-ctv
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "visa-file-transfer-files-inc-ctv"}]
+        -
+          - name: way4-ctv-parser-transfer
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "way4-ctv-parser-transfer"}]
+        -
+          - name: way4-ctv-authorization-parser
+            template: whalesay
+            arguments:
+              parameters: [{name: message, value: "way4-ctv-authorization-parser"}]
 
 
     - name: pgfs-jobs
