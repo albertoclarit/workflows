@@ -25,11 +25,11 @@ spec:
         tasks:
           - name: ppe-way4-scheduler-MC_MIGS_IMP
             template: whalesay
-              arguments:
+            arguments:
                 parameters: [ { name: message, value: "ppe-way4-scheduler-MC_MIGS_IMP" } ]
           - name: ppe-way4-scheduler-VISA_ENH_IMP
             template: whalesay
-              arguments:
+            arguments:
                 parameters: [ { name: message, value: "ppe-way4-scheduler-VISA_ENH_IMP" } ]
 
 
