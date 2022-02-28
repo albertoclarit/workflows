@@ -37,9 +37,9 @@ spec:
 
         -
           - name: hello4
-              template: whalesay
-              arguments:
-                parameters: [ { name: message, value: "hello4" } ]
+            template: whalesay
+            arguments:
+              parameters: [ { name: message, value: "hello4" } ]
           - name: hello4a
             template: cowsay
             arguments:
