@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: video-catalog
+  annotations:
+    linkerd.io/inject: enabled
   name: playlists-db
   labels:
     app: playlists-db

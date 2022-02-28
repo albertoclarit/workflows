@@ -1,6 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    linkerd.io/inject: enabled
   namespace: video-catalog
   name: videos-web
   labels:
