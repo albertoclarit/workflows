@@ -14,78 +14,80 @@ spec:
     - name: starter-job
       steps:
         -
-          - name: main-jobs-parallel
+          - name: main-jobs-dag
             template: main-jobs
             arguments:
               parameters: [{name: message, value: "starter-job"}]
 
 
     - name: main-jobs
-      steps:
-        -
-          - name: ops-preworks-sequential
-            template: ops-preworks-jobs
-            arguments:
-              parameters: [{name: message, value: "ops-preworks"}]
-          - name: auth-parser-batch-p3-parallel
-            template: auth-parser-batch-p3-jobs
-            arguments:
-              parameters: [{name: message, value: "auth-parser-batch-p3"}]
-          - name: pgfs-group-sequential
-            template: pgfs-jobs
-            arguments:
-              parameters: [{name: message, value: "auth-parser-batch-p3"}]
-          - name: auth-parser-group-sequential
-            template: auth-parser-jobs
-            arguments:
-              parameters: [{name: message, value: "auth-parser-batch-p3"}]
-          - name: cms-file-transfer-upload-dag
-            template: cms-file-transfer-upload-job
-            arguments:
-                parameters: [{name: message, value: "auth-parser-batch-p3"}]
-
-    - name: cms-file-transfer-upload-job
       dag:
         tasks:
-          - name: cms-file-transfer-upload
-            template: whalesay
-            dependencies: [ops-preworks-jobs]
-            arguments:
-              parameters: [{name: message, value: "cms-file-transfer-upload"}]
+
+            - name: ops-preworks-sequential
+              template: ops-preworks-jobs
+              arguments:
+                parameters: [{name: message, value: "ops-preworks"}]
+            - name: auth-parser-batch-p3-parallel
+              template: auth-parser-batch-p3-jobs
+              arguments:
+                parameters: [{name: message, value: "auth-parser-batch-p3"}]
+            - name: pgfs-group-sequential
+              template: pgfs-jobs
+              arguments:
+                parameters: [{name: message, value: "auth-parser-batch-p3"}]
+            - name: auth-parser-group-sequential
+              template: auth-parser-jobs
+              arguments:
+                parameters: [{name: message, value: "auth-parser-batch-p3"}]
+
 
 
     - name: ops-preworks-jobs
-      steps:
-        -
+      dag:
+        tasks:
+
           - name: mc-file-transfer-files-inc-migs
             template: whalesay
             arguments:
               parameters: [{name: message, value: "mc-file-transfer-files-inc-migs"}]
-        -
+
           - name: way4-dcf-parser-transfer
             template: whalesay
+            dependencies: [mc-file-transfer-files-inc-migs]
             arguments:
               parameters: [{name: message, value: "way4-dcf-parser-transfer"}]
-        -
+
           - name: way4-dcf-authorization-parser
             template: whalesay
+            dependencies: [way4-dcf-parser-transfer]
             arguments:
               parameters: [{name: message, value: "way4-dcf-authorization-parser"}]
-        -
+
           - name: visa-file-transfer-files-inc-ctv
             template: whalesay
+            dependencies: [ visa-file-transfer-files-inc-ctv]
             arguments:
               parameters: [{name: message, value: "visa-file-transfer-files-inc-ctv"}]
-        -
+
           - name: way4-ctv-parser-transfer
             template: whalesay
+            dependencies: [ visa-file-transfer-files-inc-ctv]
             arguments:
               parameters: [{name: message, value: "way4-ctv-parser-transfer"}]
-        -
+
           - name: way4-ctv-authorization-parser
             template: whalesay
+            dependencies: [ way4-ctv-parser-transfer]
             arguments:
               parameters: [{name: message, value: "way4-ctv-authorization-parser"}]
+
+          - name: cms-file-transfer-upload
+            template: whalesay
+            dependencies: [ mc-file-transfer-files-inc-migs ]
+            arguments:
+              parameters: [ { name: message, value: "cms-file-transfer-upload" } ]
+
 
     - name: auth-parser-batch-p3-jobs
       steps:
