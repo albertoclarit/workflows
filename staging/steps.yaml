@@ -17,6 +17,7 @@ spec:
             template: whalesay
             arguments:
               parameters: [{name: message, value: "hello1"}]
+
         - - name: hello2a
             template: whalesay
             arguments:
@@ -25,11 +26,27 @@ spec:
             template: cowsay
             arguments:
               parameters: [{name: message, value: "hello2b"}]
+
         - - name: hello3
               template: whalesay
               arguments:
                 parameters: [ { name: message, value: "hello3" } ]
-
+        - - name: hello4
+              template: whalesay
+              arguments:
+                parameters: [ { name: message, value: "hello4" } ]
+          - name: hello4a
+            template: cowsay
+            arguments:
+              parameters: [ { name: message, value: "hello4a" } ]
+          - name: hello4b
+            template: cowsay
+            arguments:
+              parameters: [ { name: message, value: "hello4b" } ]
+          - name: hello4c
+            template: cowsay
+            arguments:
+              parameters: [ { name: message, value: "hello4c" } ]
     - name: whalesay
       inputs:
         parameters:
