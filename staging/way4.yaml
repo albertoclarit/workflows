@@ -15,12 +15,12 @@ spec:
       steps:
         -
           - name: main-jobs-parallel
-            template: whalesay
+            template: main-jobs
             arguments:
               parameters: [{name: message, value: "starter-job"}]
 
 
-    - name: main-jobs-parallel
+    - name: main-jobs
       steps:
         -
           - name: ops-preworks
@@ -31,12 +31,12 @@ spec:
             template: whalesay
             arguments:
               parameters: [{name: message, value: "auth-parser-batch-p3"}]
-          - name: pgfs-group
-            template: pgfs-jobs-sequential
+          - name: pgfs-group-sequential
+            template: pgfs-jobs
             arguments:
               parameters: [{name: message, value: "auth-parser-batch-p3"}]
 
-    - name: pgfs-jobs-sequential
+    - name: pgfs-jobs
       steps:
         -
           - name: transfer-pgfs-files
