@@ -48,7 +48,7 @@ spec:
       port: 80
       targetPort: 80
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   namespace: video-catalog
@@ -58,12 +58,17 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
   name: videos-web
 spec:
+  ingressClassName: nginx
   rules:
-  - host: videos.albertoclarit.com
-    http:
-      paths:
-      - path: /home(/|$)(.*)
-        backend:
-          serviceName: videos-web
-          servicePort: 80
+    - host: videos.albertoclarit.com
+      http:
+        paths:
+          - path: /home(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: videos-web
+                port:
+                  number: 80
+
 

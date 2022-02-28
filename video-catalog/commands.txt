@@ -1,0 +1,1 @@
+While ($true) { curl -UseBasicParsing http://video.albertoclarit.com/home/;curl -UseBasicParsing http://video.albertoclarit.com/api/playlists; Start-Sleep -Seconds 1;}
