@@ -8,38 +8,27 @@ metadata:
   generateName: way4-poc-
 spec:
   entrypoint: starter-job
-  ttlStrategy:
-    secondsAfterCompletion: 60
+#  ttlStrategy:
+#    secondsAfterCompletion: 60
   templates:
     - name: starter-job
       steps:
         -
           - name: main-jobs-dag
-            template: main-jobs
-            arguments:
-              parameters: [{name: message, value: "starter-job"}]
+            template: daily-batch-input-jobs
 
 
-    - name: main-jobs
+    - name: daily-batch-input-jobs
       dag:
         tasks:
-
             - name: ops-preworks-sequential
               template: ops-preworks-jobs
-              arguments:
-                parameters: [{name: message, value: "ops-preworks"}]
             - name: auth-parser-batch-p3-parallel
               template: auth-parser-batch-p3-jobs
-              arguments:
-                parameters: [{name: message, value: "auth-parser-batch-p3"}]
             - name: pgfs-group-sequential
               template: pgfs-jobs
-              arguments:
-                parameters: [{name: message, value: "auth-parser-batch-p3"}]
             - name: auth-parser-group-sequential
               template: auth-parser-jobs
-              arguments:
-                parameters: [{name: message, value: "auth-parser-batch-p3"}]
 
 
 
