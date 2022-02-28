@@ -62,7 +62,7 @@ metadata:
   name: playlists-api
 spec:
   rules:
-  - host: servicemesh.demo
+  - host: videos.albertoclarit.com
     http:
       paths:
       - path: /api/playlists(/|$)(.*)
