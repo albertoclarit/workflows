@@ -7,7 +7,7 @@ metadata:
   name : "way4-poc"
   generateName: way4-poc-
 spec:
-  entrypoint: main-job
+  entrypoint: starter-job
   ttlStrategy:
     secondsAfterCompletion: 30
   templates:
