@@ -1,0 +1,54 @@
+# The following workflow executes a diamond workflow
+#
+#   A
+#  / \
+# B   C
+#  \ /
+#   D
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  namespace: staging # Important. If this is a fargate profiled namespace... it will run as a fargate pod
+  name : "simple-diamond-error"
+  generateName: dag-diamond-error-
+spec:
+  entrypoint: diamond
+  ttlStrategy:
+    secondsAfterCompletion: 30
+  templates:
+    - name: diamond
+      dag:
+        tasks:
+          - name: A
+            template: echo
+            arguments:
+              parameters: [{name: message, value: A}]
+          - name: B
+            depends: "A"
+            template: echo
+            arguments:
+              parameters: [{name: message, value: B}]
+          - name: C
+            depends: "A"
+            template: error
+            arguments:
+              parameters: [{name: message, value: C}]
+          - name: D
+            depends: "B && C"
+            template: echo
+            arguments:
+              parameters: [{name: message, value: D}]
+
+    - name: echo
+      inputs:
+        parameters:
+          - name: message
+      container:
+        image: alpine:3.7
+        command: [echo, "{{inputs.parameters.message}}"]
+    - name: error
+        script:
+          image: python:alpine3.6
+          command: [ python ]
+          source: |
+            return -1
