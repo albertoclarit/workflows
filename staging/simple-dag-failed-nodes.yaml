@@ -13,8 +13,8 @@ metadata:
   generateName: dag-diamond-error-
 spec:
   entrypoint: diamond
-  ttlStrategy:
-    secondsAfterCompletion: 30
+#  ttlStrategy:
+#    secondsAfterCompletion: 30
   templates:
     - name: diamond
       dag:
