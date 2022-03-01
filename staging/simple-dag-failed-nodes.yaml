@@ -51,4 +51,4 @@ spec:
         image: python:alpine3.6
         command: [ python ]
         source: |
-            return -1
+            return 0
