@@ -47,8 +47,8 @@ spec:
         image: alpine:3.7
         command: [echo, "{{inputs.parameters.message}}"]
     - name: error
-        script:
-          image: python:alpine3.6
-          command: [ python ]
-          source: |
+      script:
+        image: python:alpine3.6
+        command: [ python ]
+        source: |
             return -1
